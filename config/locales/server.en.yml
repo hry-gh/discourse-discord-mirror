@@ -4,6 +4,7 @@ en:
   discord_mirror:
     errors:
       invalid_webhook_key: "Invalid webhook key"
+      missing_channel_id: "Missing channel_id"
       missing_discord_user: "Missing discord_user id or username"
       missing_message_content: "Missing message content"
       channel_not_found: "Chat channel not found"

@@ -31,7 +31,12 @@ module ::DiscordMirror
         )
       end
 
-      channel = Chat::Channel.find_by(id: webhook.channel_id)
+      channel_id = params[:channel_id]
+      if channel_id.blank?
+        return render json: { success: false, error: "Missing channel_id" }, status: :bad_request
+      end
+
+      channel = Chat::Channel.find_by(id: channel_id)
       unless channel
         return render json: { success: false, error: "Chat channel not found" }, status: :not_found
       end

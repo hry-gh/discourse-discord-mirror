@@ -6,7 +6,6 @@ module ::DiscordMirror
 
     validates :key, presence: true, uniqueness: true
     validates :name, presence: true
-    validates :channel_id, presence: true
 
     before_validation :generate_key, on: :create
 
