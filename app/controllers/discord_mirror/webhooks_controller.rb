@@ -48,14 +48,13 @@ module ::DiscordMirror
           avatar_url: discord_user_params[:avatar_url],
         )
 
-      message =
-        Chat::CreateMessage.call(
-          guardian: Guardian.new(user),
-          params: {
-            chat_channel_id: channel.id,
-            message: message_params[:content],
-          },
-        )
+      message_create_params = {
+        chat_channel_id: channel.id,
+        message: message_params[:content],
+      }
+      message_create_params[:in_reply_to_id] = params[:reply_to_message_id] if params[:reply_to_message_id].present?
+
+      message = Chat::CreateMessage.call(guardian: Guardian.new(user), params: message_create_params)
 
       if message.success?
         render json: { success: true, discourse_message_id: message.message_instance.id }
