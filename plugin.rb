@@ -23,8 +23,14 @@ after_initialize do
   register_modifier(:user_search_ids) { |ids| ids.select { |id| id > 0 } }
 
   # Block profile access for shadow users
-  add_to_class(:guardian, :can_see_profile?) do |user|
-    return false if user&.bot? && !is_staff?
-    super(user)
+  reloadable_patch do |plugin|
+    Guardian.prepend(
+      Module.new do
+        def can_see_profile?(user)
+          return false if user&.bot? && !is_staff?
+          super
+        end
+      end,
+    )
   end
 end
