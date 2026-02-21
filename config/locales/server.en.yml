@@ -1,1 +1,10 @@
 en:
+  site_settings:
+    discord_mirror_enabled: "Enable the Discord Mirror plugin to receive messages from Discord"
+  discord_mirror:
+    errors:
+      invalid_webhook_key: "Invalid webhook key"
+      missing_discord_user: "Missing discord_user id or username"
+      missing_message_content: "Missing message content"
+      channel_not_found: "Chat channel not found"
+      message_creation_failed: "Failed to create chat message"
