@@ -74,18 +74,7 @@ module ::DiscordMirror
     end
 
     def generate_unique_username
-      base = UserNameSuggester.sanitize_username(@username)
-      base = "discord_user" if base.blank?
-
-      username = base
-      counter = 1
-
-      while User.exists?(username: username)
-        username = "#{base}_#{counter}"
-        counter += 1
-      end
-
-      username
+      "d_#{@discord_user_id}"
     end
 
     def update_avatar_if_changed(user)

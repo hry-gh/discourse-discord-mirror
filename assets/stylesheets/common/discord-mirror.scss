@@ -1,0 +1,12 @@
+// Bot indicator for shadow users (negative user IDs)
+.chat-message-container.is-bot .chat-message-info__username::after {
+  content: "BOT";
+  text-transform: uppercase;
+  padding: 0.2rem 0.3rem;
+  margin-left: 0.5em;
+  background: var(--primary-low);
+  color: var(--primary-900);
+  border-radius: var(--d-border-radius);
+  font-size: var(--font-down-2);
+  vertical-align: middle;
+}

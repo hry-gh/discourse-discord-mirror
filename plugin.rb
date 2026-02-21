@@ -10,6 +10,8 @@
 
 enabled_site_setting :discord_mirror_enabled
 
+register_asset "stylesheets/common/discord-mirror.scss"
+
 module ::DiscordMirror
   PLUGIN_NAME = "discourse-discord-mirror"
 end
@@ -17,5 +19,12 @@ end
 require_relative "lib/discord_mirror/engine"
 
 after_initialize do
-  # Code which should run after Rails has finished booting
+  # Exclude shadow users (negative IDs) from user search
+  register_modifier(:user_search_ids) { |ids| ids.select { |id| id > 0 } }
+
+  # Block profile access for shadow users
+  add_to_class(:guardian, :can_see_profile?) do |user|
+    return false if user&.bot? && !is_staff?
+    super(user)
+  end
 end
