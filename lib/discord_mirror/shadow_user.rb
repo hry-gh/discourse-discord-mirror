@@ -64,14 +64,13 @@ module ::DiscordMirror
     end
 
     def allocate_shadow_user_id
-      DB.query_single(<<~SQL, SHADOW_ID_START, SHADOW_ID_END).first
-        WITH seq AS (SELECT generate_series(?, ?, -1) AS id)
-        SELECT seq.id FROM seq
-        LEFT JOIN users ON users.id = seq.id
-        WHERE users.id IS NULL
-        ORDER BY seq.id DESC
-        LIMIT 1
-      SQL
+      key = "next_shadow_user_id"
+      next_id = PluginStore.get(DiscordMirror::PLUGIN_NAME, key)&.to_i || SHADOW_ID_START
+
+      raise "Shadow user ID limit reached" if next_id < SHADOW_ID_END
+
+      PluginStore.set(DiscordMirror::PLUGIN_NAME, key, next_id - 1)
+      next_id
     end
 
     def generate_unique_username

@@ -3,7 +3,7 @@ en:
     admin:
       site_settings:
         categories:
-          TODO_plugin_name: "Plugin Name"
+          discord_mirror: "Discord Mirror"
   js:
-    discourse_plugin_name:
+    discord_mirror:
       placeholder: placeholder
